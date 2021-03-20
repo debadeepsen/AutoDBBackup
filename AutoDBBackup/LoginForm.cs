@@ -14,6 +14,7 @@ namespace AutoDBBackup
     public partial class LoginForm : Form
     {
         public string ConnectionString { get; set; }
+        public string DbLocation { get; set; }
         public LoginForm()
         {
             InitializeComponent();
@@ -44,6 +45,7 @@ namespace AutoDBBackup
                 Cursor = Cursors.Default;
                 btnLogin.Enabled = true;
                 ConnectionString = connStr;
+                DbLocation = txtDb.Text.Trim();
                 DialogResult = DialogResult.OK;
                 Close();
             }

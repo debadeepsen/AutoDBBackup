@@ -15,6 +15,7 @@ namespace AutoDBBackup
     public partial class MainForm : Form
     {
         private string connectionString = "";
+        private string dbLocation = "";
         public MainForm()
         {
             InitializeComponent();
@@ -30,6 +31,7 @@ namespace AutoDBBackup
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {
                     connectionString = loginForm.ConnectionString;
+                    dbLocation = loginForm.DbLocation;
                     Show();
                 }
                 else if (loginForm.DialogResult == DialogResult.Cancel)
@@ -114,6 +116,7 @@ namespace AutoDBBackup
                         TreeNode tableNode = new TreeNode
                         {
                             ImageKey = "table",
+                            SelectedImageKey = "table",
                             Text = rdr[0].ToString()
                         };
 
@@ -145,15 +148,26 @@ namespace AutoDBBackup
 
                     string sql = "use " + e.Node.Parent.Text + "; SELECT * FROM " + e.Node.Text;
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    MySqlDataReader rdr = cmd.ExecuteReader();
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    DataTable temp = new DataTable();
+                    adapter.Fill(temp);
 
-                    
-                    rdr.Close();
+                    dataGridView1.DataSource = temp;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip = contextMenuStrip1;
+                
+                
             }
         }
     }
