@@ -33,3 +33,4 @@ D:\Code\AutoDBBackup\AutoDBBackup\bin\Debug\System.Runtime.CompilerServices.Unsa
 D:\Code\AutoDBBackup\AutoDBBackup\obj\Debug\AutoDBBackup.csproj.CopyComplete
 D:\Code\AutoDBBackup\AutoDBBackup\obj\Debug\AutoDBBackup.LoginForm.resources
 D:\Code\AutoDBBackup\AutoDBBackup\obj\Debug\AutoDBBackup.MainForm.resources
+D:\Code\AutoDBBackup\AutoDBBackup\obj\Debug\AutoDBBackup.BackupForm.resources

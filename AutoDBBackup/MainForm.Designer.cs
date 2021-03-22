@@ -36,6 +36,7 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmBackup = new System.Windows.Forms.ToolStripMenuItem();
+            this.backupNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -95,15 +96,23 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmBackup});
+            this.tsmBackup,
+            this.backupNowToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(186, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(186, 70);
             // 
             // tsmBackup
             // 
             this.tsmBackup.Name = "tsmBackup";
             this.tsmBackup.Size = new System.Drawing.Size(185, 22);
             this.tsmBackup.Text = "Set up auto backup...";
+            // 
+            // backupNowToolStripMenuItem
+            // 
+            this.backupNowToolStripMenuItem.Name = "backupNowToolStripMenuItem";
+            this.backupNowToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.backupNowToolStripMenuItem.Text = "Backup now";
+            this.backupNowToolStripMenuItem.Click += new System.EventHandler(this.backupNowToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -131,6 +140,7 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tsmBackup;
+        private System.Windows.Forms.ToolStripMenuItem backupNowToolStripMenuItem;
     }
 }
 

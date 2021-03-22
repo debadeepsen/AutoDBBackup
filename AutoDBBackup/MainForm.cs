@@ -15,7 +15,10 @@ namespace AutoDBBackup
     public partial class MainForm : Form
     {
         private string connectionString = "";
-        private string dbLocation = "";
+        private string hostName = "";
+        private string username = "";
+        private string password = "";
+        private string dbSelected = "";
         public MainForm()
         {
             InitializeComponent();
@@ -31,7 +34,9 @@ namespace AutoDBBackup
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {
                     connectionString = loginForm.ConnectionString;
-                    dbLocation = loginForm.DbLocation;
+                    hostName = loginForm.HostName;
+                    username = loginForm.Username;
+                    password = loginForm.Password;
                     Show();
                 }
                 else if (loginForm.DialogResult == DialogResult.Cancel)
@@ -163,12 +168,40 @@ namespace AutoDBBackup
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            //Console.WriteLine()
+
+            if (e.Node.Parent != null)
+                return;
+            dbSelected = e.Node.Text;
+
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenuStrip = contextMenuStrip1;
-                
-                
             }
+        }
+
+        private void backupNowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var y = DateTime.Now.Year;
+            var m = DateTime.Now.Month;
+            var d = DateTime.Now.Day;
+            var hh = DateTime.Now.Hour;
+            var mm = DateTime.Now.Minute;
+            var ss = DateTime.Now.Second;
+
+            Process process = new Process();
+            process.StartInfo = new ProcessStartInfo("cmd.exe");
+            process.StartInfo.WorkingDirectory = "C:\\wamp64\\bin\\mysql\\mysql8.0.18\\bin";
+            process.StartInfo.Arguments = "/C .\\mysqldump --host=" + hostName + " --user=" + username + " --password=" + password + " " + dbSelected + " > c:\\users\\103731\\desktop\\sql\\__backup__" + dbSelected + "__"
+                + y + "-"
+                + m + "-"
+                + d + "-"
+                + "-"
+                + hh + "-"
+                + mm + "-"
+                + ss
+                + ".sql";
+            process.Start();
         }
     }
 }
