@@ -192,7 +192,7 @@ namespace AutoDBBackup
             Process process = new Process();
             process.StartInfo = new ProcessStartInfo("cmd.exe");
             process.StartInfo.WorkingDirectory = "C:\\wamp64\\bin\\mysql\\mysql8.0.18\\bin";
-            process.StartInfo.Arguments = "/C .\\mysqldump --host=" + hostName + " --user=" + username + " --password=" + password + " " + dbSelected + " > c:\\users\\103731\\desktop\\sql\\__backup__" + dbSelected + "__"
+            process.StartInfo.Arguments = "/C .\\mysqldump --column-statistics=0 --host=" + hostName + " --user=" + username + " --password=" + password + " " + dbSelected + " > c:\\users\\103731\\desktop\\sql\\__backup__" + dbSelected + "__"
                 + y + "-"
                 + m + "-"
                 + d + "-"
