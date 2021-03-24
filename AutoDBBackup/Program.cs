@@ -14,9 +14,15 @@ namespace AutoDBBackup
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            try
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
+            }
+            catch (ObjectDisposedException){
+                // probably not the best way to do it, but this works for now
+            }
         }
     }
 }

@@ -42,6 +42,7 @@ namespace AutoDBBackup
                 else if (loginForm.DialogResult == DialogResult.Cancel)
                 {
                     Close();
+                    Application.Exit();
                 }
             }
         }
@@ -135,37 +136,6 @@ namespace AutoDBBackup
                 }
             }
         }
-
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (e.Action == TreeViewAction.Expand || e.Action == TreeViewAction.Collapse)
-                return;
-
-            if (e.Node.Parent == null)
-                return;
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    Console.WriteLine("Getting data...");
-                    conn.Open();
-
-                    string sql = "use " + e.Node.Parent.Text + "; SELECT * FROM " + e.Node.Text;
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                    DataTable temp = new DataTable();
-                    adapter.Fill(temp);
-
-                    dataGridView1.DataSource = temp;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             //Console.WriteLine()

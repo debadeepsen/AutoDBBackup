@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Cryptography;
+using System.IO;
+using AutoDBBackup.Utils;
 
 namespace AutoDBBackup
 {
@@ -26,6 +29,17 @@ namespace AutoDBBackup
         {
             base.OnLoad(e);
             txtDb.Focus();
+
+            SetupFolders();
+        }
+
+        private static void SetupFolders()
+        {
+            // these methods skip folder creation
+            // if the folder already exists
+            Directory.CreateDirectory(Constants.SAVED_FOLDER);
+            Directory.CreateDirectory(Constants.SETTINGS_FOLDER);
+            Directory.CreateDirectory(Constants.BACKUP_FOLDER);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -60,5 +74,23 @@ namespace AutoDBBackup
                 btnLogin.Enabled = true;
             }
         }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            DialogResult = DialogResult.Cancel;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var hostname = txtDb.Text.Trim();
+            var username = txtU.Text.Trim();
+            var password = Lib.SHA512(txtP.Text.Trim());
+
+
+
+        }
+
+
     }
 }
