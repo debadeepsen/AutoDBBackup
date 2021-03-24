@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.IO;
 using AutoDBBackup.Utils;
+using Newtonsoft.Json;
 
 namespace AutoDBBackup
 {
@@ -31,6 +32,7 @@ namespace AutoDBBackup
             txtDb.Focus();
 
             SetupFolders();
+            LoadListIntoView();
         }
 
         private static void SetupFolders()
@@ -40,6 +42,7 @@ namespace AutoDBBackup
             Directory.CreateDirectory(Constants.SAVED_FOLDER);
             Directory.CreateDirectory(Constants.SETTINGS_FOLDER);
             Directory.CreateDirectory(Constants.BACKUP_FOLDER);
+            //File.Create(Constants.SETTINGS_FILE);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -81,16 +84,68 @@ namespace AutoDBBackup
             DialogResult = DialogResult.Cancel;
         }
 
+
+
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var hostname = txtDb.Text.Trim();
-            var username = txtU.Text.Trim();
-            var password = Lib.SHA512(txtP.Text.Trim());
+            if (!string.IsNullOrEmpty(txtConnName.Text.Trim()))
+                SaveNewList();
+            LoadListIntoView();
+        }
 
+        private void LoadListIntoView()
+        {
+            if (!File.Exists(Constants.SETTINGS_FILE))
+                return;
 
+            var existingList = File.ReadAllText(Constants.SETTINGS_FILE);
+            if (string.IsNullOrEmpty(existingList))
+                return;
+
+            DbList dbList = JsonConvert.DeserializeObject<DbList>(existingList);
+
+            listView1.Items.Clear();
+
+            foreach (var item in dbList.List)
+            {
+                listView1.Items.Add(new ListViewItem
+                {
+                    Text = item.Name
+                });
+            }
 
         }
 
+        private void SaveNewList()
+        {
+            Db db = new Db
+            {
+                Name = txtConnName.Text.Trim(),
+                Hostname = txtDb.Text.Trim(),
+                Username = txtU.Text.Trim(),
+                Password = Lib.SHA512(txtP.Text.Trim())
+            };
+
+            DbList dbList = new DbList();
+
+            if (File.Exists(Constants.SETTINGS_FILE))
+            {
+                var existingList = File.ReadAllText(Constants.SETTINGS_FILE);
+                if (!string.IsNullOrEmpty(existingList))
+                {
+                    dbList = JsonConvert.DeserializeObject<DbList>(existingList);
+                }
+            }
+
+            if (!dbList.List.Exists(x => x.Hostname == db.Hostname))
+                dbList.List.Add(db);
+
+            var json = JsonConvert.SerializeObject(dbList);
+
+            //MessageBox.Show(json);
+
+            File.WriteAllText(Constants.SETTINGS_FILE, json);
+        }
 
     }
 }

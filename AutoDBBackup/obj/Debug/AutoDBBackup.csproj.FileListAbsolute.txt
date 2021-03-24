@@ -34,3 +34,5 @@ D:\Code\AutoDBBackup\AutoDBBackup\obj\Debug\AutoDBBackup.csproj.CopyComplete
 D:\Code\AutoDBBackup\AutoDBBackup\obj\Debug\AutoDBBackup.LoginForm.resources
 D:\Code\AutoDBBackup\AutoDBBackup\obj\Debug\AutoDBBackup.MainForm.resources
 D:\Code\AutoDBBackup\AutoDBBackup\obj\Debug\AutoDBBackup.BackupForm.resources
+D:\Code\AutoDBBackup\AutoDBBackup\bin\Debug\Newtonsoft.Json.dll
+D:\Code\AutoDBBackup\AutoDBBackup\bin\Debug\Newtonsoft.Json.xml
