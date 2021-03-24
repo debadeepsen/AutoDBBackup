@@ -110,7 +110,8 @@ namespace AutoDBBackup
             {
                 listView1.Items.Add(new ListViewItem
                 {
-                    Text = item.Name
+                    Text = item.Name,
+                    ToolTipText = item.Hostname
                 });
             }
 
